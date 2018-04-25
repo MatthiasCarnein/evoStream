@@ -1,0 +1,13 @@
+Package: evoStream
+Type: Package
+Title: evoStream - Evolutionary Stream Clustering Utilizing Idle Times
+Version: 1.0.0
+Author: Who wrote it
+Maintainer: The package maintainer <yourself@somewhere.net>
+Description: Stream clustering algorithm based on evolutionary optimization. Micro-clusters are incrementally reclustered using an evloutionary algorithm. Evolutionary algorithms create slight variations by combining and randomly modifying existing solutions. By iteratively selecting better solutions, an evolutionary pressure is created which improves the clustering over time. Since the evolutionary algorithm is incremental, it is possible to apply between observations, e.g. in the idle time of the stream. 
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Imports: Rcpp (>= 0.12.15), stream
+LinkingTo: Rcpp
+RoxygenNote: 6.0.1
