@@ -15,7 +15,7 @@ This implementation allows to uses fixed number of generations after each observ
 The easiest way to install the package is by using devtools:
 
 ```R
-devtools::install_git("https://wiwi-gitlab.uni-muenster.de/stream/evoStream")
+devtools::install_git("https://wiwi-gitlab.uni-muenster.de/m_carn01/evoStream")
 ```
 
 
