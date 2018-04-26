@@ -466,7 +466,7 @@ public:
 
     // calc distance to centers
     for(int i=0; i<assignment.size(); i++){
-      result += pow(this->micro[i].distance(centres(assignment[i],_)),2);
+      result += pow(this->micro[i].distance(centres(assignment[i],_)),2) * this->micro[i].weight;
     }
 
     return(1/result);
