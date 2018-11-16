@@ -26,6 +26,9 @@ devtools::install_git("https://wiwi-gitlab.uni-muenster.de/m_carn01/evoStream")
 ## Usage
 
 ```R
+library(stream)
+## library(evoStream)
+
 ## create data stream
 stream <- DSD_Gaussians(k = 3, d = 2)
 
