@@ -12,7 +12,11 @@ This implementation allows to uses fixed number of generations after each observ
 
 ## Installation
 
-The easiest way to install the package is by using devtools:
+An implementation of the proposed algorithm is available in the development version of the popular R-package [stream](https://github.com/mhahsler/stream).
+The algorithm is implemented in C++ with interfaces to R for easier prototyping.
+The latest release of the library on CRAN does not yet include evoStream but will do so with the next release. 
+For users not wanting to switch to the development version, the algorithm is also available as an extension package to stream.
+The easiest way to install the extension package is by using devtools:
 
 ```R
 devtools::install_git("https://wiwi-gitlab.uni-muenster.de/m_carn01/evoStream")
@@ -20,8 +24,6 @@ devtools::install_git("https://wiwi-gitlab.uni-muenster.de/m_carn01/evoStream")
 
 
 ## Usage
-
-The algorithm is implemented as an extension to the R-package [stream](https://github.com/mhahsler/stream). Once the publication has been accepted we plan to incorporate it into the package. its usage is therefore the same as in the stream package. An simple example is shown below:
 
 ```R
 ## create data stream
