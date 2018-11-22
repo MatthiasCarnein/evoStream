@@ -428,8 +428,6 @@ public:
 
 
   void recluster(int generations){
-    Rcpp::NumericMatrix microCluster = this->get_microclusters();
-
     // fixed number of generations
     for(int i=0; i<generations; i++){
 #if VERBOSE >= 1
