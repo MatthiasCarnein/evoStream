@@ -109,3 +109,11 @@ evoStream_R$methods(
     }
   }
 )
+
+
+evoStream_R$methods(
+  recluster = function(generations=1) {
+    .self$C$recluster(generations)
+  }
+)
+

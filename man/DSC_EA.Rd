@@ -4,8 +4,8 @@
 \alias{DSC_EA}
 \title{Evolutionary Algorithm}
 \usage{
-DSC_EA(k, crossoverRate = 0.8, mutationRate = 0.001, populationSize = 100,
-  generations = 2000)
+DSC_EA(k, crossoverRate = 0.8, mutationRate = 0.001,
+  populationSize = 100, generations = 2000)
 }
 \arguments{
 \item{k}{number of macro-clusters}

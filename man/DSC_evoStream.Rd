@@ -4,9 +4,10 @@
 \alias{DSC_evoStream}
 \title{evoStream - Evolutionary Stream Clustering}
 \usage{
-DSC_evoStream(r, lambda = 0.001, tgap = 100, k = 2, crossoverRate = 0.8,
-  mutationRate = 0.001, populationSize = 100, initializeAfter = 2 * k,
-  incrementalGenerations = 5, reclusterGenerations = 2000)
+DSC_evoStream(r, lambda = 0.001, tgap = 100, k = 2,
+  crossoverRate = 0.8, mutationRate = 0.001, populationSize = 100,
+  initializeAfter = 2 * k, incrementalGenerations = 5,
+  reclusterGenerations = 2000)
 }
 \arguments{
 \item{r}{radius threshold for micro-cluster assignment}
