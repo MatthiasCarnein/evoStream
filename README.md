@@ -1,12 +1,12 @@
 # evoStream - Evolutionary Stream Clustering Utilizing Idle Times
 
 This is the implementation of an evolutionary stream clustering algorithm as proposed in our article in the Journal of Big Data Research.
-The online component uses a simplified version of \code{DBSTREAM} to generate micro-clusters.
+The online component uses a simplified version of `DBSTREAM` to generate micro-clusters.
 The micro-clusters are then incrementally reclustered using an evloutionary algorithm.
 Evolutionary algorithms create slight variations by combining and randomly modifying existing solutions.
 By iteratively selecting better solutions, an evolutionary pressure is created which improves the clustering over time.
 Since the evolutionary algorithm is incremental, it is possible to apply it between observations, e.g. in the idle time of the stream.
-Whenever there is idle time, we can call the \code{recluster} function of the reference class to improve the macro-clusters (see example).
+Whenever there is idle time, we can call the `recluster` function of the reference class to improve the macro-clusters (see example).
 The evolutionary algorithm can also be applied as a traditional reclustering step, or a combination of both.
 In addition, this implementation also allows to evaluate a fixed number of generations after each observation.
 
@@ -48,5 +48,7 @@ get_centers(evoStream, type="micro")
 get_centers(evoStream, type="macro")
 ```
 
+
+## Related Implementations
 
 There is also a C++ port of this implementation without the glue code for R. It is available here: [https://wiwi-gitlab.uni-muenster.de/m_carn01/evoStream_C](https://wiwi-gitlab.uni-muenster.de/m_carn01/evoStream_C)
