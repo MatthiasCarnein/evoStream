@@ -41,7 +41,7 @@ reset_stream(stream)
 plot(two, stream, type="both")
 
 ## if we have time, evaluate additional generations. This can be called at any time, also between observations.
-EA$RObj$recluster(1000)
+two$macro_dsc$RObj$recluster(2000)
 
 ## plot improved result
 reset_stream(stream)
@@ -49,6 +49,7 @@ plot(two, stream, type="both")
 
 
 ## alternatively: do not create twostage but apply directly
+reset_stream(stream)
 update(dbstream, stream, n = 1000)
 recluster(EA, dbstream)
 reset_stream(stream)
