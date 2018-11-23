@@ -380,6 +380,7 @@ public:
 
 
   void evolution(){
+    if(!this->init) return;
 
     this->calculateFitness();
 
@@ -428,6 +429,8 @@ public:
 
 
   void recluster(int generations){
+    if(!this->init) return;
+
     // fixed number of generations
     for(int i=0; i<generations; i++){
 #if VERBOSE >= 1
