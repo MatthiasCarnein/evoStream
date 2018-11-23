@@ -19,11 +19,11 @@ Reference class used for Reclustering using an evolutionary algorithm
 
 \item{\code{k}}{number of macro-clusters}
 
+\item{\code{generations}}{number of EA generations performed during reclustering}
+
 \item{\code{data}}{micro-clusters to recluster}
 
 \item{\code{weights}}{weights of the micro-clusters}
-
-\item{\code{generations}}{number of EA generations performed during reclustering}
 
 \item{\code{C}}{exposed C class}
 }}

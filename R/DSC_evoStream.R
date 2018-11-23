@@ -6,33 +6,33 @@
 #' The micro-clusters are then incrementally reclustered using an evloutionary algorithm.
 #' Evolutionary algorithms create slight variations by combining and randomly modifying existing solutions.
 #' By iteratively selecting better solutions, an evolutionary pressure is created which improves the clustering over time.
-#' Since the evolutionary algorithm is incremental, it is possible to apply between observations, e.g. in the idle time of the stream.
+#' Since the evolutionary algorithm is incremental, it is possible to apply it between observations, e.g. in the idle time of the stream.
 #' Alternatively it can be applied as a traditional reclustering step, or a combination of both.
-#' This implementation allows to uses fixed number of generations after each observation and during reclustering.
+#' This implementation allows to use a fixed number of generations after each observation and during reclustering.
 #'
 #' @param r radius threshold for micro-cluster assignment
 #' @param lambda decay rate
 #' @param tgap time-interval between outlier detection and clean-up
 #' @param k number of macro-clusters
+#' @param incrementalGenerations number of EA generations performed after each observation
+#' @param reclusterGenerations number of EA generations performed during reclustering
 #' @param crossoverRate cross-over rate for the evolutionary algorithm
 #' @param mutationRate mutation rate for the evolutionary algorithm
 #' @param populationsize number of solutions that the evolutionary algorithm maintains
 #' @param initializeAfter number of micro-cluster required for the initialization of the evolutionary algorithm.
-#' @param incrementalGenerations number of EA generations performed after each observation
-#' @param reclusterGenerations number of EA generations performed during reclustering
 #'
 #' @author Matthias Carnein \email{Matthias.Carnein@@uni-muenster.de}
 #'
 #' @examples
 #' stream <- DSD_Gaussians(k = 3, d = 2)
-#' evoStream <- DSC_evoStream(r=0.05, k=3)
+#' evoStream <- DSC_evoStream(r=0.05, k=3, incrementalGenerations=5, reclusterGenerations=2000)
 #' update(evoStream, stream, n = 1200)
 #' plot(evoStream, stream, type = "both")
 #'
 #' @export
-DSC_evoStream <- function(r, lambda=0.001, tgap=100, k=2, crossoverRate=.8, mutationRate=.001, populationSize=100, initializeAfter=2*k, incrementalGenerations=5, reclusterGenerations=2000) {
+DSC_evoStream <- function(r, lambda=0.001, tgap=100, incrementalGenerations=5, reclusterGenerations=2000, k=2, crossoverRate=.8, mutationRate=.001, populationSize=100, initializeAfter=2*k) {
 
-  evoStream <- evoStream_R$new(r, lambda, tgap, k, crossoverRate, mutationRate, populationSize, initializeAfter, incrementalGenerations, reclusterGenerations)
+  evoStream <- evoStream_R$new(r, lambda, tgap, incrementalGenerations, reclusterGenerations, k, crossoverRate, mutationRate, populationSize, initializeAfter)
 
   structure(
     list(
@@ -50,7 +50,7 @@ DSC_evoStream <- function(r, lambda=0.001, tgap=100, k=2, crossoverRate=.8, muta
 
 #' Reference Class evoStream_R
 #'
-#' Reference class mostly used to expose C class object
+#' Reference class mostly used to expose the C class object
 #'
 #' @field C exposed C class
 #'
@@ -109,7 +109,6 @@ evoStream_R$methods(
     }
   }
 )
-
 
 evoStream_R$methods(
   recluster = function(generations=1) {

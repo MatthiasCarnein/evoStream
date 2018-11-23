@@ -6,7 +6,7 @@
 \alias{evoStream_R}
 \title{Reference Class evoStream_R}
 \description{
-Reference class mostly used to expose C class object
+Reference class mostly used to expose the C class object
 }
 \section{Fields}{
 

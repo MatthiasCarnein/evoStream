@@ -4,48 +4,54 @@
 \alias{DSC_EA}
 \title{Evolutionary Algorithm}
 \usage{
-DSC_EA(k, crossoverRate = 0.8, mutationRate = 0.001,
-  populationSize = 100, generations = 2000)
+DSC_EA(k, generations = 2000, crossoverRate = 0.8,
+  mutationRate = 0.001, populationSize = 100)
 }
 \arguments{
 \item{k}{number of macro-clusters}
 
-\item{crossoverRate}{cross-over rate for the evolutionary algorithm}
+\item{generations}{number of EA generations performed during reclustering}
 
 \item{mutationRate}{mutation rate for the evolutionary algorithm}
 
-\item{r}{radius threshold for micro-cluster assignment}
-
-\item{lambda}{decay rate}
-
-\item{tgap}{time-interval between outlier detection and clean-up}
-
 \item{populationsize}{number of solutions that the evolutionary algorithm maintains}
-
-\item{initializeAfter}{number of micro-cluster required for the initialization of the evolutionary algorithm.}
-
-\item{incrementalGenerations}{number of EA generations performed after each observation}
-
-\item{reclusterGenerations}{number of EA generations performed during reclustering}
 }
 \description{
 Reclustering using an evolutionary algorithm.
-This approach is used by \code{evoStream} but can be used for all micro-clusters.
+This approach was designed for \code{evoStream} but can also be used for other micro-clustering algorithms.
 The evolutionary algorithm uses existing clustering solutions and creates small variations of them by combining and randomly modfiying them.
 The modified solutions can yield better partitions and thus can improve the clustering over time.
 The evolutionary algorithm is incremental, which allows to improve existing macro-clusters instead of recomputing them every time.
 }
 \examples{
-stream <- DSD_Gaussians(k = 3, d = 2)
-dbstream <- DSC_DBSTREAM(r=0.1)
-EA <- DSC_EA(k=3)
+stream <- DSD_Memory(DSD_Gaussians(k = 3, d = 2), 1000)
 
+## online algorithm
+dbstream <- DSC_DBSTREAM(r=0.1)
+
+## offline algorithm
+EA <- DSC_EA(k=3, generations=1000)
+
+## create pipeline and insert observations
 two <- DSC_TwoStage(dbstream, EA)
-update(two, stream, n=1200)
+update(two, stream, n=1000)
+
+## plot resut
+reset_stream(stream)
 plot(two, stream, type="both")
 
-update(dbstream, stream, n = 1200)
+## if we have time, evaluate additional generations. This can be called at any time, also between observations.
+EA$RObj$recluster(1000)
+
+## plot improved result
+reset_stream(stream)
+plot(two, stream, type="both")
+
+
+## alternatively: do not create twostage but apply directly
+update(dbstream, stream, n = 1000)
 recluster(EA, dbstream)
+reset_stream(stream)
 plot(EA, stream)
 
 

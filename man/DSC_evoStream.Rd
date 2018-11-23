@@ -4,10 +4,10 @@
 \alias{DSC_evoStream}
 \title{evoStream - Evolutionary Stream Clustering}
 \usage{
-DSC_evoStream(r, lambda = 0.001, tgap = 100, k = 2,
+DSC_evoStream(r, lambda = 0.001, tgap = 100,
+  incrementalGenerations = 5, reclusterGenerations = 2000, k = 2,
   crossoverRate = 0.8, mutationRate = 0.001, populationSize = 100,
-  initializeAfter = 2 * k, incrementalGenerations = 5,
-  reclusterGenerations = 2000)
+  initializeAfter = 2 * k)
 }
 \arguments{
 \item{r}{radius threshold for micro-cluster assignment}
@@ -15,6 +15,10 @@ DSC_evoStream(r, lambda = 0.001, tgap = 100, k = 2,
 \item{lambda}{decay rate}
 
 \item{tgap}{time-interval between outlier detection and clean-up}
+
+\item{incrementalGenerations}{number of EA generations performed after each observation}
+
+\item{reclusterGenerations}{number of EA generations performed during reclustering}
 
 \item{k}{number of macro-clusters}
 
@@ -24,10 +28,6 @@ DSC_evoStream(r, lambda = 0.001, tgap = 100, k = 2,
 
 \item{initializeAfter}{number of micro-cluster required for the initialization of the evolutionary algorithm.}
 
-\item{incrementalGenerations}{number of EA generations performed after each observation}
-
-\item{reclusterGenerations}{number of EA generations performed during reclustering}
-
 \item{populationsize}{number of solutions that the evolutionary algorithm maintains}
 }
 \description{
@@ -36,13 +36,13 @@ The online component uses a simplified version of \code{DBSTREAM} to generate mi
 The micro-clusters are then incrementally reclustered using an evloutionary algorithm.
 Evolutionary algorithms create slight variations by combining and randomly modifying existing solutions.
 By iteratively selecting better solutions, an evolutionary pressure is created which improves the clustering over time.
-Since the evolutionary algorithm is incremental, it is possible to apply between observations, e.g. in the idle time of the stream.
+Since the evolutionary algorithm is incremental, it is possible to apply it between observations, e.g. in the idle time of the stream.
 Alternatively it can be applied as a traditional reclustering step, or a combination of both.
-This implementation allows to uses fixed number of generations after each observation and during reclustering.
+This implementation allows to use a fixed number of generations after each observation and during reclustering.
 }
 \examples{
 stream <- DSD_Gaussians(k = 3, d = 2)
-evoStream <- DSC_evoStream(r=0.05, k=3)
+evoStream <- DSC_evoStream(r=0.05, k=3, incrementalGenerations=5, reclusterGenerations=2000)
 update(evoStream, stream, n = 1200)
 plot(evoStream, stream, type = "both")
 

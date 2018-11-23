@@ -2,43 +2,55 @@
 #' Evolutionary Algorithm
 #'
 #' Reclustering using an evolutionary algorithm.
-#' This approach is used by \code{evoStream} but can be used for all micro-clusters.
+#' This approach was designed for \code{evoStream} but can also be used for other micro-clustering algorithms.
 #' The evolutionary algorithm uses existing clustering solutions and creates small variations of them by combining and randomly modfiying them.
 #' The modified solutions can yield better partitions and thus can improve the clustering over time.
 #' The evolutionary algorithm is incremental, which allows to improve existing macro-clusters instead of recomputing them every time.
 #'
-#' @param r radius threshold for micro-cluster assignment
-#' @param lambda decay rate
-#' @param tgap time-interval between outlier detection and clean-up
 #' @param k number of macro-clusters
-#' @param crossoverRate cross-over rate for the evolutionary algorithm
+#' @param generations number of EA generations performed during reclustering
 #' @param mutationRate mutation rate for the evolutionary algorithm
 #' @param populationsize number of solutions that the evolutionary algorithm maintains
-#' @param initializeAfter number of micro-cluster required for the initialization of the evolutionary algorithm.
-#' @param incrementalGenerations number of EA generations performed after each observation
-#' @param reclusterGenerations number of EA generations performed during reclustering
 #'
 #' @author Matthias Carnein \email{Matthias.Carnein@@uni-muenster.de}
 #'
 #' @examples
-#' stream <- DSD_Gaussians(k = 3, d = 2)
-#' dbstream <- DSC_DBSTREAM(r=0.1)
-#' EA <- DSC_EA(k=3)
+#' stream <- DSD_Memory(DSD_Gaussians(k = 3, d = 2), 1000)
 #'
+#' ## online algorithm
+#' dbstream <- DSC_DBSTREAM(r=0.1)
+#'
+#' ## offline algorithm
+#' EA <- DSC_EA(k=3, generations=1000)
+#'
+#' ## create pipeline and insert observations
 #' two <- DSC_TwoStage(dbstream, EA)
-#' update(two, stream, n=1200)
+#' update(two, stream, n=1000)
+#'
+#' ## plot resut
+#' reset_stream(stream)
 #' plot(two, stream, type="both")
 #'
-#' update(dbstream, stream, n = 1200)
+#' ## if we have time, evaluate additional generations. This can be called at any time, also between observations.
+#' two$macro_dsc$RObj$recluster(2000)
+#'
+#' ## plot improved result
+#' reset_stream(stream)
+#' plot(two, stream, type="both")
+#'
+#'
+#' ## alternatively: do not create twostage but apply directly
+#' update(dbstream, stream, n = 1000)
 #' recluster(EA, dbstream)
+#' reset_stream(stream)
 #' plot(EA, stream)
 #'
 #'
 #' @export
-DSC_EA <- function(k, crossoverRate=.8, mutationRate=.001, populationSize=100, generations=2000) {
+DSC_EA <- function(k, generations=2000, crossoverRate=.8, mutationRate=.001, populationSize=100) {
 
 
-  EA <- EA_R$new(k, crossoverRate, mutationRate, populationSize, generations)
+  EA <- EA_R$new(k, generations, crossoverRate, mutationRate, populationSize)
 
 
   structure(
@@ -59,9 +71,9 @@ DSC_EA <- function(k, crossoverRate=.8, mutationRate=.001, populationSize=100, g
 #' @field mutationRate mutation rate for the evolutionary algorithm
 #' @field populationSize number of solutions that the evolutionary algorithm maintains
 #' @field k number of macro-clusters
+#' @field generations number of EA generations performed during reclustering
 #' @field data micro-clusters to recluster
 #' @field weights weights of the micro-clusters
-#' @field generations number of EA generations performed during reclustering
 #' @field C exposed C class
 #'
 #' @author Matthias Carnein \email{matthias.carnein@@uni-muenster.de}
@@ -79,13 +91,13 @@ EA_R <- setRefClass("EA",
                     ),
 
                     methods = list(
-                      initialize = function(k, crossoverRate, mutationRate, populationSize, generations) {
+                      initialize = function(k, generations, crossoverRate, mutationRate, populationSize) {
 
                         k <<- as.integer(k)
+                        generations <<- as.integer(generations)
                         crossoverRate <<- crossoverRate
                         mutationRate <<- mutationRate
                         populationSize <<- as.integer(populationSize)
-                        generations <<- as.integer(generations)
                       }
                     )
 )
@@ -117,7 +129,7 @@ EA_R$methods(
     } else{
       return(clusterAssignment)
     }
-  }
+  },
 
-
+  recluster = function(generations=1){.self$C$recluster(generations)}
 )
