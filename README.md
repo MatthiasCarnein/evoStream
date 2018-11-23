@@ -1,14 +1,14 @@
 # evoStream - Evolutionary Stream Clustering Utilizing Idle Times
 
-This R package implements an evolutionary stream clustering algorithm. The corresponding publication is currently in review.
-The algorithm uses a widely popuar two-phase clustering approach where the stream is first summarised in real time.
-The result are many small preliminary clusters in the stream called 'micro-clusters'.
-Our algorithm then incrementally reclusteres these micro-clusters using an evloutionary algorithm.
+This R package implements an evolutionary stream clustering algorithm.
+The online component uses a simplified version of \code{DBSTREAM} to generate micro-clusters.
+The micro-clusters are then incrementally reclustered using an evloutionary algorithm.
 Evolutionary algorithms create slight variations by combining and randomly modifying existing solutions.
 By iteratively selecting better solutions, an evolutionary pressure is created which improves the clustering over time.
-Since the evolutionary algorithm is incremental, it is possible to apply between observations, e.g. in the idle time of the stream.
-Alternatively it can be applied as a traditional reclustering step, or a combination of both.
-This implementation allows to uses fixed number of generations after each observation and during reclustering.
+Since the evolutionary algorithm is incremental, it is possible to apply it between observations, e.g. in the idle time of the stream.
+Whenever there is idle time, we can call the \code{recluster} function of the reference class to improve the macro-clusters (see example).
+The evolutionary algorithm can also be applied as a traditional reclustering step, or a combination of both.
+In addition, this implementation also allows to evaluate a fixed number of generations after each observation.
 
 ## Installation
 
@@ -47,3 +47,6 @@ get_centers(evoStream, type="micro")
 ## get macro-clusters
 get_centers(evoStream, type="macro")
 ```
+
+
+There is also a C++ port of this implementation without the glue code for R. It is available here: [https://wiwi-gitlab.uni-muenster.de/m_carn01/evoStream_C](https://wiwi-gitlab.uni-muenster.de/m_carn01/evoStream_C)
