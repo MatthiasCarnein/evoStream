@@ -9,8 +9,7 @@
 #' Since the evolutionary algorithm is incremental, it is possible to apply it between observations, e.g. in the idle time of the stream.
 #' Whenever there is idle time, we can call the \code{recluster} function of the reference class to improve the macro-clusters (see example).
 #' Alternatively, the evolutionary algorithm can be applied as a traditional reclustering step, or a combination of both.
-#' For simplicity, this implementation allows to evaluate a fixed number of generations after each observation and during reclustering.
-#' Alternatively, the \code{recluster} function can be called explicitly based on the available time.
+#' For simplicity, this implementation also allows to evaluate a fixed number of generations after each observation and during reclustering.
 #'
 #' @param r radius threshold for micro-cluster assignment
 #' @param lambda decay rate
