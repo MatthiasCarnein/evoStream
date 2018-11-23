@@ -26,9 +26,9 @@ DSC_evoStream(r, lambda = 0.001, tgap = 100, k = 2,
 
 \item{mutationRate}{mutation rate for the evolutionary algorithm}
 
-\item{initializeAfter}{number of micro-cluster required for the initialization of the evolutionary algorithm.}
+\item{populationSize}{number of solutions that the evolutionary algorithm maintains}
 
-\item{populationsize}{number of solutions that the evolutionary algorithm maintains}
+\item{initializeAfter}{number of micro-cluster required for the initialization of the evolutionary algorithm.}
 }
 \description{
 Stream clustering algorithm based on evolutionary optimization.
@@ -38,8 +38,8 @@ Evolutionary algorithms create slight variations by combining and randomly modif
 By iteratively selecting better solutions, an evolutionary pressure is created which improves the clustering over time.
 Since the evolutionary algorithm is incremental, it is possible to apply it between observations, e.g. in the idle time of the stream.
 Whenever there is idle time, we can call the \code{recluster} function of the reference class to improve the macro-clusters (see example).
-Alternatively, the evolutionary algorithm can be applied as a traditional reclustering step, or a combination of both.
-For simplicity, this implementation also allows to evaluate a fixed number of generations after each observation and during reclustering.
+The evolutionary algorithm can also be applied as a traditional reclustering step, or a combination of both.
+In addition, this implementation also allows to evaluate a fixed number of generations after each observation.
 }
 \examples{
 stream <- DSD_Memory(DSD_Gaussians(k = 3, d = 2), 1000)
@@ -67,6 +67,9 @@ evoStream$RObj$recluster(1000)
 reset_stream(stream)
 plot(evoStream, stream, type="both")
 
+}
+\references{
+Carnein M. and Trautmann H. (2018), "evoStream - Evolutionary Stream Clustering Utilizing Idle Times", Big Data Research.
 }
 \author{
 Matthias Carnein \email{Matthias.Carnein@uni-muenster.de}

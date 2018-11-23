@@ -8,8 +8,8 @@
 #' By iteratively selecting better solutions, an evolutionary pressure is created which improves the clustering over time.
 #' Since the evolutionary algorithm is incremental, it is possible to apply it between observations, e.g. in the idle time of the stream.
 #' Whenever there is idle time, we can call the \code{recluster} function of the reference class to improve the macro-clusters (see example).
-#' Alternatively, the evolutionary algorithm can be applied as a traditional reclustering step, or a combination of both.
-#' For simplicity, this implementation also allows to evaluate a fixed number of generations after each observation and during reclustering.
+#' The evolutionary algorithm can also be applied as a traditional reclustering step, or a combination of both.
+#' In addition, this implementation also allows to evaluate a fixed number of generations after each observation.
 #'
 #' @param r radius threshold for micro-cluster assignment
 #' @param lambda decay rate
@@ -19,10 +19,12 @@
 #' @param reclusterGenerations number of EA generations performed during reclustering
 #' @param crossoverRate cross-over rate for the evolutionary algorithm
 #' @param mutationRate mutation rate for the evolutionary algorithm
-#' @param populationsize number of solutions that the evolutionary algorithm maintains
+#' @param populationSize number of solutions that the evolutionary algorithm maintains
 #' @param initializeAfter number of micro-cluster required for the initialization of the evolutionary algorithm.
 #'
 #' @author Matthias Carnein \email{Matthias.Carnein@@uni-muenster.de}
+#'
+#' @references Carnein M. and Trautmann H. (2018), "evoStream - Evolutionary Stream Clustering Utilizing Idle Times", Big Data Research.
 #'
 #' @examples
 #' stream <- DSD_Memory(DSD_Gaussians(k = 3, d = 2), 1000)
