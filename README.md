@@ -1,6 +1,6 @@
 # evoStream - Evolutionary Stream Clustering Utilizing Idle Times
 
-This R package implements an evolutionary stream clustering algorithm.
+This is the implementation of an evolutionary stream clustering algorithm as proposed in our article in the Journal of Big Data Research.
 The online component uses a simplified version of \code{DBSTREAM} to generate micro-clusters.
 The micro-clusters are then incrementally reclustered using an evloutionary algorithm.
 Evolutionary algorithms create slight variations by combining and randomly modifying existing solutions.
