@@ -1,6 +1,11 @@
 # evoStream - Evolutionary Stream Clustering Utilizing Idle Times
 
 This is the implementation of an evolutionary stream clustering algorithm as proposed in our article in the Journal of Big Data Research.
+
+'''
+Carnein M. and Trautmann H. (2018), "evoStream - Evolutionary Stream Clustering Utilizing Idle Times", Big Data Research. 
+'''
+
 The online component uses a simplified version of `DBSTREAM` to generate micro-clusters.
 The micro-clusters are then incrementally reclustered using an evloutionary algorithm.
 Evolutionary algorithms create slight variations by combining and randomly modifying existing solutions.
@@ -21,7 +26,6 @@ The easiest way to install the extension package is by using devtools:
 ```R
 devtools::install_git("https://wiwi-gitlab.uni-muenster.de/m_carn01/evoStream")
 ```
-
 
 ## Usage
 
