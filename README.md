@@ -30,25 +30,43 @@ devtools::install_git("https://wiwi-gitlab.uni-muenster.de/m_carn01/evoStream")
 
 ```R
 library(stream)
-## library(evoStream)
+#library(evoStream)
 
-## create data stream
-stream <- DSD_Gaussians(k = 3, d = 2)
+stream <- DSD_Memory(DSD_Gaussians(k = 3, d = 2), 1000)
 
-## initialize evoStream
-evoStream <- DSC_evoStream(r=0.05, k=3)
+## init evoStream
+evoStream <- DSC_evoStream(r=0.05, k=3, incrementalGenerations=1, reclusterGenerations=1000)
 
-## update model
-update(evoStream, stream, n = 1200)
+## insert observations
+update(evoStream, stream, n = 1000)
 
-## plot the result
-plot(evoStream, stream, type = "both")
-
-## get micro-clusters
+## micro clusters
 get_centers(evoStream, type="micro")
 
-## get macro-clusters
+## micro weights
+get_weights(evoStream, type="micro")
+
+## macro clusters
 get_centers(evoStream, type="macro")
+
+## macro weights
+get_weights(evoStream, type="macro")
+
+## plot result
+reset_stream(stream)
+plot(evoStream, stream, type = "both")
+
+## if we have time, evaluate additional generations. This can be called at any time, also between observations.
+## by default, 1 generation is evaluated after each observation and 1000 generations during reclustering (parameters)
+evoStream$RObj$recluster(2000)
+
+## plot improved result
+reset_stream(stream)
+plot(evoStream, stream, type="both")
+
+## get assignment of micro to macro clusters
+microToMacro(evoStream)
+
 ```
 
 
